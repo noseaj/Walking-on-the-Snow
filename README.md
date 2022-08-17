@@ -1,6 +1,6 @@
 # Walking-on-the-Snow
 - 2021-1 광운대학교 InteractiveMedia TermProject
-- 모바일 기기 Orientation Sensor,Touch Sensor 이용
+- 모바일 기기 Orientation Sensor, Touch Sensor 이용
 - 눈 내리는 공간에서 걷는 재미
 - 서버 X
 
