@@ -1,0 +1,149 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html, body { 
+    width: 100%; 
+    height: 100%;
+    text-align: center;
+    background-color: rgb(196, 196, 196);
+}
+#snow {
+    position: fixed;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    background: rgb(196, 196, 196);
+}
+.title {
+  text-shadow: 2px 2px 2px gray;
+}
+#show {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    font-size: 1.6em;
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.button {
+  position: relative;
+  display: inline-block;
+  margin: 20px;
+}
+
+.button a {
+  color: white;
+  font-family: Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 25px;
+  text-align: center;
+  text-decoration: none;
+  background-color: #b9b8b6;
+  display: block;
+  position: relative;
+  padding:10px 30px;
+  
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  text-shadow: 0px 1px 0px #000;
+  filter: dropshadow(color=#000, offx=0px, offy=1px);
+  
+  -webkit-box-shadow:inset 0 1px 0 #e6e6e6, 0 10px 0 #666461;
+  -moz-box-shadow:inset 0 1px 0 #e6e6e6, 0 10px 0 #666461;
+  box-shadow:inset 0 1px 0 #e6e6e6, 0 10px 0 #666461;
+  
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.button a:active {
+  top: 10px;
+  background-color:#969292;
+  
+  -webkit-box-shadow:inset 0 1px 0 #c9c8c8, inset 0 -3px 0 #353535;
+  -moz-box-shadow:inset 0 1px 0 #c9c8c8, inset 0 -3pxpx 0 #353535;
+  box-shadow:inset 0 1px 0 #c9c8c8, inset 0 -3px 0 #353535;
+}
+
+.button:after {
+  content:"";
+  height: 100%;
+  width: 100%;
+  padding: 4px;
+  position: absolute;
+  bottom: -15px;
+  left: -4px;
+  z-index: -1;
+  background-color:#000000;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.ajax-loader {
+  position: absolute;
+  transform-origin: 50% 50%;
+  font-size: 60px;
+  width: 0.5em;
+  height: 1em;
+}
+.paw {
+  width: 1.5em;
+  height: 0.8em;
+  animation: 4500ms pawAnimation ease-in-out infinite;
+  opacity: 0;
+}
+svg {
+  width: 100%;
+  height: 100%;
+}
+/* left foot */
+.paw:nth-child(odd) {  
+  transform: rotate(-10deg);
+}
+/* right foot */
+.paw:nth-child(even) {
+  transform: rotate(10deg) scaleX(-1) translate(10%, 0%);
+}
+.ajax-loader {
+  top: 20%;
+  left: 50%;
+  transform: rotate(30deg) translate(50%, -50%);
+}
+@keyframes pawAnimation {
+  0%{
+    opacity: 1;
+  }
+  50%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 0;
+  }
+}
+.indicatorDot {
+  width: 30px;
+  height: 30px;
+  background-color: rgba(255, 0, 0, 0); /* 디버그 필요할때 색깔 바꾸면 됨 */
+  border-radius: 50%;
+  position: fixed;
+  overflow: hidden;
+}
+img {
+  position: fixed;
+  overflow: hidden;
+}
+#footbtn {
+  position: fixed;
+  left: 5%;
+  top: 85%;
+  z-index: 99999;
+}
+#footbtn span {
+  display: inline-block;
+  width: 80px;
+}

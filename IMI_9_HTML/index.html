@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Cache-Control" content="no-transform" />
+        <title>Final Project_Team_9</title>
+        <meta name="applicable-device" content="mobile" />
+        <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta name="format-detection" content="telephone=no">
+        <meta name="description" content="snow-js">
+        <link rel="stylesheet" href="./snow.css">
+    </head>
+    <body>      
+        <div id="snow">
+            <div id="show">
+                <svg id="svg-sprite">
+                    <symbol id="paw" viewBox="0 0 249 209.32">
+                    <image xlink:href="footprint0.png" x="0" y="0" height="100px" width="100px"/>
+                    </symbol>
+                </svg>
+                <div class="ajax-loader">
+                    <div class="paw"><svg class="icon"><use xlink:href="#paw" /></svg></div>
+                    <div class="paw"><svg class="icon"><use xlink:href="#paw" /></svg></div>
+                    <div class="paw"><svg class="icon"><use xlink:href="#paw" /></svg></div>
+                    <div class="paw"><svg class="icon"><use xlink:href="#paw" /></svg></div>
+                    <div class="paw"><svg class="icon"><use xlink:href="#paw" /></svg></div>
+                    <div class="paw"><svg class="icon"><use xlink:href="#paw" /></svg></div>
+                    <div class="paw"><svg class="icon"><use xlink:href="#paw" /></svg></div>
+                    <div class="paw"><svg class="icon"><use xlink:href="#paw" /></svg></div>
+                </div>
+                <p class="title">Walking on the Snow<br><br><br></p>
+                <div class="button">
+                    <a href="#" input onclick="div_hide();">Start</a>
+                </div>
+            </div>   
+        </div>
+        <div class="indicatorDot" style="left:50%; top:50%;"></div>
+        <div id="footbtn" >
+            <span><img onclick="foot_change1();" src="footbtn1.png" width="50" height="50"></span>
+            <span><img onclick="foot_change2();" src="footbtn2.png" width="50" height="50"></span>
+            <span><img onclick="foot_change3();" src="footbtn3.png" width="50" height="50"></span>
+            <span><img onclick="foot_change4();" src="footbtn4.png" width="50" height="50"></span>
+        </div>
+    </body>
+    <script type="text/javascript">
+        var px = 50; // Position x and y
+        var py = 50;
+        var vx = 0.0; // Velocity x and y
+        var vy = 0.0;
+
+        // 간격 두고 그리기
+        var px1 = 50;
+        var py1 = 50;
+        var d = 100;
+
+        function getAccel(){
+            var isMobile = navigator.userAgent.match(/(iPhone|iPod|iPad)/); 
+            // 유저 단말기 정보가 (iPhone|iPod|iPad) 이면
+            if (isMobile != null) {
+                DeviceMotionEvent.requestPermission().then(response => {
+                    if (response == 'granted') {
+                        console.log("motion sensor permission granted");
+                    }
+                });
+            }
+            
+            window.addEventListener('deviceorientation',(event) => {
+            
+                vx = vx + event.gamma*2; // 스마트폰 화면은 폭이 좁으므로 x축 속도 2배
+                vy = vy + event.beta;
+                
+                px = px + vx*.00025;
+                if (px > 93 || px < 0){ // px = 0~ 93으로 제한
+                    px = Math.max(0, Math.min(93, px))
+                    vx = 0;
+                }
+
+                py = py + vy*.00025;
+                if (py > 95 || py < 0){ // py = 0~ 95으로 제한
+                    py = Math.max(0, Math.min(95, py))
+                    vy = 0;
+                }
+                
+                dot = document.getElementsByClassName("indicatorDot")[0]
+                dot.setAttribute('style', "left:" + (px) + "%;" +
+                                            "top:" + (py) + "%;"); // % 좌표
+                
+                if((px1-px)**2 + (py1-py)**2 > d) { // (px1, py1)과 (px, py) 사이의 거리를 구해서 10이 넘으면 출력
+                    var angle = Math.atan2(py1-py, px-px1);
+                    draw(angle);
+                    px1 = px;
+                    py1 = py;
+                }    
+            
+            });
+
+        }
+
+        var count = 0; // 발자국 좌우 카운트
+        var change = 1; // 발자국 종류
+        function foot_change1() {
+            change = 1;
+            d = 100;
+        }
+        function foot_change2() {
+            change = 2;
+            d = 60;
+        } 
+        function foot_change3() {
+            change = 3;
+            d = 150;
+        } 
+        function foot_change4() {
+            change = 4;
+            d = 1;
+        } 
+        function draw(angle){
+            var img = document.createElement("img"); // 이미지 소스, 크기
+            if( count % 2 == 0 ) {
+                switch(change) {
+                    case 1:
+                        img.src = 'footprint1.png';
+                        img.width = 30;
+                        img.height = 30;
+                        break;
+                    case 2:
+                        img.src = 'footprint3.png';
+                        img.width = 30;
+                        img.height = 30;
+                        break;
+                    case 3:
+                        img.src = 'footprint5.png';
+                        img.width = 100;
+                        img.height = 100;
+                        break;
+                    case 4:
+                        img.src = 'footprint7.png';
+                        break;
+                }
+            } else {
+                switch(change) {
+                    case 1:
+                        img.src = 'footprint2.png';
+                        img.width = 30;
+                        img.height = 30;
+                        break;
+                    case 2:
+                        img.src = 'footprint4.png';
+                        img.width = 30;
+                        img.height = 30;
+                        break;
+                    case 3:
+                        img.src = 'footprint6.png';
+                        img.width = 100;
+                        img.height = 100;
+                        break;
+                    case 4:
+                        img.src = 'footprint7.png';
+                        break;
+                }
+            }
+            count = count + 1;
+            
+            // 이미지 위치
+            if (change == 4) {
+                img.style.left = px +'%';
+                img.style.top = py +'%';
+            } else {
+                img.style.left = px - 1 + Math.random()*2 +'%';
+                img.style.top = py - 1 + Math.random()*2 +'%';                
+            }
+
+
+            var s = 'rotate('; // 이미지 회전
+            var d =  -angle + 'rad)';
+            var r = s.concat(d);
+            img.style.transform = r;
+            // img.style.transform = 'rotate( -angle rad)';
+
+            document.body.appendChild(img);
+
+            img.style.animation = '30s pawAnimation';
+            setTimeout(function() {
+                    document.body.removeChild(img);
+            }, 30000);
+
+        }
+ 
+        function div_hide() {
+            document.getElementById("show").style.display = "none";
+            document.getElementById("footbtn").style.display = "block";
+            getAccel();
+        }
+    
+        document.addEventListener('DOMContentLoaded', function() {
+            new Snow('#snow',{
+                number:100,     // snow 개수
+                r: 2.5,         // snow 크기
+                v: 0.8          // 내리는 속도
+            });
+            document.getElementById("footbtn").style.display = "none";
+        });
+    </script>
+    <script src="./snow.js"></script>
+</html>
